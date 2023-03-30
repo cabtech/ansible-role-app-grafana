@@ -1,0 +1,30 @@
+---
+# --------------------------------
+
+grafana_arch: "linux-amd64"
+grafana_builds: [{version: "9.1.6", state: present}]
+grafana_config_file: "{{ grafana_dir_etc }}/grafana.ini"
+grafana_dir_bin: /opt/grafana
+grafana_dir_etc: /etc/grafana
+grafana_dir_lib: /var/lib/grafana
+grafana_dir_log: /var/log/grafana
+grafana_download_base: "https://dl.grafana.com/enterprise/release"
+grafana_internet_timeout: 60
+grafana_pkg_dependencies: ["adduser", "apt-transport-https", "libfontconfig1", "software-properties-common", "wget"]
+grafana_port_http: 3000
+grafana_suffix: "tar.gz"
+grafana_svc_enabled: true
+grafana_svc_name: grafana
+grafana_svc_state: started
+grafana_user: grafana
+grafana_version: "9.1.6"
+
+grafana_dirs:
+- {name: "{{ grafana_dir_bin }}", group: "{{ grafana_user }}", mode: "0755", owner: "{{ grafana_user }}"}
+- {name: "{{ grafana_dir_etc }}", group: "{{ grafana_user }}", mode: "0775", owner: "{{ grafana_user }}"}
+- {name: "{{ grafana_dir_lib }}", group: "{{ grafana_user }}", mode: "0775", owner: "{{ grafana_user }}"}
+- {name: "{{ grafana_dir_lib }}/plugins", group: "{{ grafana_user }}", mode: "0775", owner: "{{ grafana_user }}"}
+- {name: "{{ grafana_dir_log }}", group: "{{ grafana_user }}", mode: "0775", owner: "{{ grafana_user }}"}
+
+# --------------------------------
+...

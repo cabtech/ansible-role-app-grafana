@@ -1,0 +1,17 @@
+---
+extends: default
+
+rules:
+  braces:
+    min-spaces-inside: 0
+    max-spaces-inside: -1
+  colons:
+    max-spaces-after: 1
+    max-spaces-before: 0
+  line-length:
+    level: warning
+    max: 1024
+  indentation:
+    spaces: 2
+    indent-sequences: false
+...

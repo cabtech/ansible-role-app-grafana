@@ -1,0 +1,22 @@
+# MANAGED_BY_ANSIBLE
+{% if grafana_db_password is defined %}
+[database]
+host = 127.0.0.1:5432
+name = grafana
+password = {{ grafana_db_password }}
+ssl_mode = disable
+type = postgres
+user = {{ grafana_db_username }}
+{% endif %}
+
+[paths]
+data = {{ grafana_dir_lib }}
+logs = {{ grafana_dir_log }}
+plugins = {{ grafana_dir_lib }}/plugins
+
+[security]
+admin_user = {{ grafana_admin_username }}
+admin_password = {{ grafana_admin_password }}
+
+[server]
+http_port = {{ grafana_port_http }}

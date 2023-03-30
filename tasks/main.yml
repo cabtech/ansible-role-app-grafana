@@ -1,0 +1,104 @@
+---
+# --------------------------------
+
+- name: "Add Grafana account"
+  ansible.builtin.user:
+    comment: "Grafana runtime account"
+    name: "{{ grafana_user }}"
+    state: present
+    system: true
+  become: true
+  tags: [ct-grafana]
+
+- name: "Create Grafana directories"
+  ansible.builtin.file:
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    owner: "{{ item.owner }}"
+    path: "{{ item.name }}"
+    state: directory
+  loop: "{{ grafana_dirs }}"
+  become: true
+  tags: [ct-grafana]
+
+- name: "Create package directories"
+  ansible.builtin.file:
+    group: "{{ grafana_user }}"
+    mode: "0755"
+    owner: "{{ grafana_user }}"
+    path: "{{ grafana_dir_bin }}/{{ item.version }}"
+    state: directory
+  loop: "{{ grafana_builds }}"
+  when: item.state == "present"
+  become: true
+  tags: [ct-grafana]
+
+- name: "Download Grafana archives"
+  ansible.builtin.get_url:
+    dest: "{{ grafana_dir_bin }}/{{ item.version }}/grafana-enterprise-{{ item.version }}.{{ grafana_arch }}.{{ grafana_suffix }}"
+    mode: "0644"
+    timeout: "{{ grafana_internet_timeout }}"
+    url: "{{ grafana_download_base }}/grafana-enterprise-{{ item.version }}.{{ grafana_arch }}.{{ grafana_suffix }}"
+    validate_certs: false
+  loop: "{{ grafana_builds }}"
+  when: item.state == "present"
+  become: true
+  become_user: "{{ grafana_user }}"
+  tags: [ct-grafana]
+
+- name: "Expand Grafana archives"
+  ansible.builtin.unarchive:
+    copy: false
+    dest: "{{ grafana_dir_bin }}/{{ item.version }}"
+    src: "{{ grafana_dir_bin }}/{{ item.version }}/grafana-enterprise-{{ item.version }}.{{ grafana_arch }}.{{ grafana_suffix }}"
+  loop: "{{ grafana_builds }}"
+  when: item.state == "present"
+  become: true
+  become_user: "{{ grafana_user }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: [ct-grafana]
+
+- name: "Create symlink to active Grafana binaries"
+  ansible.builtin.file:
+    dest: "{{ grafana_dir_bin }}/grafana"
+    src: "./{{ grafana_version }}/grafana-{{ grafana_version }}"
+    state: link
+  ignore_errors: "{{ ansible_check_mode }}"
+  become: true
+  become_user: "{{ grafana_user }}"
+  tags: [ct-grafana]
+
+- name: "Render Grafana config file (no_log)"
+  ansible.builtin.template:
+    dest: "{{ grafana_config_file }}"
+    group: "{{ grafana_user }}"
+    mode: "0644"
+    owner: "{{ grafana_user }}"
+    src: "grafana.ini.j2"
+  no_log: true
+  notify: HandlerRestartGrafana
+  become: true
+  tags: [ct-grafana]
+
+- name: "Render Grafana systemd unit file"
+  ansible.builtin.template:
+    dest: /etc/systemd/system/{{ grafana_svc_name }}.service
+    group: root
+    mode: "0644"
+    owner: root
+    src: "systemd.service.j2"
+  register: reg_systemd
+  become: true
+  tags: [ct-grafana]
+
+- name: "Configure Grafana service"
+  ansible.builtin.systemd:
+    daemon_reload: "{{ reg_systemd is changed }}"
+    enabled: "{{ grafana_svc_enabled }}"
+    name: grafana
+    state: "{{ grafana_svc_state }}"
+  become: true
+  tags: [ct-grafana]
+
+# --------------------------------
+...
