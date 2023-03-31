@@ -9,6 +9,7 @@
 ## Default variables
 | Name | Type | Value | Comments |
 | ---- | ---- | ----- | -------- |
+| grafana_allow_embedding | Boolean | false | see [docs](https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/#allow_embedding) |
 | grafana_arch | string | linux-amd64 ||
 | grafana_builds | list(dict) | see `defaults/main.yml` ||
 | grafana_config_file | UnixPath |  `$grafana_dir_etc/grafana.ini` ||
