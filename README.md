@@ -1,4 +1,11 @@
 # ansible-role-app-grafana
+
+## Optional variables
+| Name | Type | Comments |
+| ---- | ---- | -------- |
+| grafana_db_password | string | See section `Database settings` below |
+| grafana_db_username | string | See section `Database settings` below |
+
 ## Default variables
 | Name | Type | Value | Comments |
 | ---- | ---- | ----- | -------- |
@@ -19,3 +26,15 @@
 | grafana_svc_name | string | grafana ||
 | grafana_svc_state | string | started ||
 | grafana_version | string | "9.1.6" ||
+
+## Database variables
+Setting `grafana_db_password` is the trigger for rendering the `database` section in `grafana.ini`
+
+| Name | Type | ValueIfDefault | Comments |
+| ---- | ---- | -------------- | -------- |
+| grafana_db_dbname | string | grafana | name of the db Grafana will use as its backend |
+| grafana_db_host | string | `127.0.0.1:5432` | i.e. PostgreSQL on localhost |
+| grafana_db_password | string |||
+| grafana_db_ssl_mode | string | disable ||
+| grafana_db_type | string | postgres ||
+| grafana_db_username | string |||

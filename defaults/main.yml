@@ -4,6 +4,14 @@
 grafana_arch: "linux-amd64"
 grafana_builds: [{version: "9.1.6", state: present}]
 grafana_config_file: "{{ grafana_dir_etc }}/grafana.ini"
+
+grafana_db_dbname: grafana
+grafana_db_host: "127.0.0.1:5432"
+grafana_db_ssl_mode: disable
+grafana_db_type: postgres
+# grafana_db_password: youNeedToSetThis
+# grafana_db_username: youNeedToSetThis
+
 grafana_dir_bin: /opt/grafana
 grafana_dir_etc: /etc/grafana
 grafana_dir_lib: /var/lib/grafana
