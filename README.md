@@ -38,3 +38,6 @@ Setting `grafana_db_password` is the trigger for rendering the `database` sectio
 | grafana_db_ssl_mode | string | disable ||
 | grafana_db_type | string | postgres ||
 | grafana_db_username | string |||
+
+## To Do
+- add a mechanism to specify a list of plugins and download them
