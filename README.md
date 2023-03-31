@@ -40,4 +40,5 @@ Setting `grafana_db_password` is the trigger for rendering the `database` sectio
 | grafana_db_username | string |||
 
 ## To Do
+- configure SMTP settings
 - add a mechanism to specify a list of plugins and download them
