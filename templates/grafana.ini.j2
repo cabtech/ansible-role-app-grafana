@@ -21,6 +21,8 @@ allow_loading_unsigned_plugins = false
 admin_user = {{ grafana_admin_username }}
 admin_password = {{ grafana_admin_password }}
 allow_embedding = {{ grafana_allow_embedding | bool | lower }}
+cookie_samesite = {{ grafana_cookie_samesite }}
+cookie_secure = {{ grafana_cookie_secure | bool | lower }}
 
 [server]
 http_port = {{ grafana_port_http }}
