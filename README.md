@@ -1,10 +1,18 @@
 # ansible-role-app-grafana
 
+
 ## Optional variables
 | Name | Type | Comments |
 | ---- | ---- | -------- |
 | grafana_db_password | string | See section `Database settings` below |
 | grafana_db_username | string | See section `Database settings` below |
+| grafana_domain | string | Only needed if using reverse proxy |
+| grafana_smtp_from_address | string | who emails come from , e.g. grafana@example.com |
+| grafana_smtp_hostname | hostname:port | how to contact the SMTP server |
+| grafana_smtp_password | string | password for the SMTP server |
+| grafana_smtp_username | string | username on the SMTP server |
+
+When using SMTP, the presence or absence of `grafana_smtp_password` determines whether to enable SMTP or not.
 
 ## Default variables
 | Name | Type | Value | Comments |

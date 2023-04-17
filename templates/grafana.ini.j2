@@ -26,3 +26,20 @@ cookie_secure = {{ grafana_cookie_secure | bool | lower }}
 
 [server]
 http_port = {{ grafana_port_http }}
+{% if grafana_domain is defined %}
+domain = {{ grafana_domain }}
+root_url = https://{{ grafana_domain }}/
+{% endif %}
+
+[smtp]
+{% if grafana_smtp_password is defined %}
+enabled = true
+from_address = {{ grafana_smtp_from_address }}
+from_name = Grafana
+host = {{ grafana_smtp_hostname }}
+password = {{ grafana_smtp_password }}
+skip_verify = true
+user = {{ grafana_smtp_username }}
+{% else %}
+enabled = false
+{% endif %}
