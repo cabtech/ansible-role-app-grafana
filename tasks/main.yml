@@ -80,6 +80,17 @@
   become: true
   tags: [ct-grafana]
 
+- name: "Grafana plugins"
+  community.grafana.grafana_plugin:
+    name: "{{ item.name }}"
+    version: "{{ item.version | default('latest') }}"
+    state: "{{ item.state }}"
+  loop: "{{ grafana_plugins }}"
+  notify: HandlerRestartGrafana
+  become: true
+  become_user: "{{ grafana_user }}"
+  tags: [ct-grafana]
+
 - name: "Render Grafana systemd unit file"
   ansible.builtin.template:
     dest: /etc/systemd/system/{{ grafana_svc_name }}.service

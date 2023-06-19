@@ -1,18 +1,5 @@
+----
 # ansible-role-app-grafana
-
-
-## Optional variables
-| Name | Type | Comments |
-| ---- | ---- | -------- |
-| grafana_db_password | string | See section `Database settings` below |
-| grafana_db_username | string | See section `Database settings` below |
-| grafana_domain | string | Only needed if using reverse proxy |
-| grafana_smtp_from_address | string | who emails come from , e.g. grafana@example.com |
-| grafana_smtp_hostname | hostname:port | how to contact the SMTP server |
-| grafana_smtp_password | string | password for the SMTP server |
-| grafana_smtp_username | string | username on the SMTP server |
-
-When using SMTP, the presence or absence of `grafana_smtp_password` determines whether to enable SMTP or not.
 
 ## Default variables
 | Name | Type | Value | Comments |
@@ -36,11 +23,17 @@ When using SMTP, the presence or absence of `grafana_smtp_password` determines w
 | grafana_svc_state | string | started ||
 | grafana_version | string | "9.1.6" ||
 
+## Optional variables
+| Name | Type | Comments |
+| ---- | ---- | -------- |
+| grafana_domain | string | Only needed if using reverse proxy |
+| grafana_plugins | list(dict(name,state,version)) | plugins to install key(version) is optional |
+
 ## Database variables
 Setting `grafana_db_password` is the trigger for rendering the `database` section in `grafana.ini`
 
-| Name | Type | ValueIfDefault | Comments |
-| ---- | ---- | -------------- | -------- |
+| Name | Type | DefaultIfApplic | Comments |
+| ---- | ---- | --------------- | -------- |
 | grafana_db_dbname | string | grafana | name of the db Grafana will use as its backend |
 | grafana_db_host | string | `127.0.0.1` | i.e. PostgreSQL on localhost |
 | grafana_db_password | string |||
@@ -49,6 +42,15 @@ Setting `grafana_db_password` is the trigger for rendering the `database` sectio
 | grafana_db_type | string | postgres ||
 | grafana_db_username | string |||
 
-## To Do
-- configure SMTP settings
-- add a mechanism to specify a list of plugins and download them
+## SMTP variables
+Setting `grafana_smtp_password` is the trigger for rendering the `SMTP` section in `grafana.ini`
+
+| Name | Type | DefaultIfApplic | Comments |
+| ---- | ---- | --------------- | -------- |
+| grafana_smtp_from_address | string | who emails come from , e.g. `grafana@example.com` |
+| grafana_smtp_hostname | hostname:port | how to contact the SMTP server |
+| grafana_smtp_password | string | password for the SMTP server |
+| grafana_smtp_port | integer | 25 | concatenated with `grafana_smtp_hostname` |
+| grafana_smtp_username | string | username on the SMTP server |
+
+----

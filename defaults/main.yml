@@ -23,6 +23,7 @@ grafana_dir_log: /var/log/grafana
 grafana_download_base: "https://dl.grafana.com/enterprise/release"
 grafana_internet_timeout: 60
 grafana_pkg_dependencies: ["adduser", "apt-transport-https", "libfontconfig1", "software-properties-common", "wget"]
+grafana_plugins: []
 grafana_port_http: 3000
 grafana_suffix: "tar.gz"
 grafana_svc_enabled: true
