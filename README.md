@@ -42,8 +42,9 @@ Setting `grafana_db_password` is the trigger for rendering the `database` sectio
 | Name | Type | ValueIfDefault | Comments |
 | ---- | ---- | -------------- | -------- |
 | grafana_db_dbname | string | grafana | name of the db Grafana will use as its backend |
-| grafana_db_host | string | `127.0.0.1:5432` | i.e. PostgreSQL on localhost |
+| grafana_db_host | string | `127.0.0.1` | i.e. PostgreSQL on localhost |
 | grafana_db_password | string |||
+| grafana_db_port | integer |  5432 | i.e. PostgreSQL ||
 | grafana_db_ssl_mode | string | disable ||
 | grafana_db_type | string | postgres ||
 | grafana_db_username | string |||

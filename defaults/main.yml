@@ -9,7 +9,8 @@ grafana_cookie_samesite: "lax"
 grafana_cookie_secure: false
 
 grafana_db_dbname: grafana
-grafana_db_host: "127.0.0.1:5432"
+grafana_db_host: "127.0.0.1"
+grafana_db_port: "5432"
 grafana_db_ssl_mode: disable
 grafana_db_type: postgres
 # grafana_db_password: youNeedToSetThis
