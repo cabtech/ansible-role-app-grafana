@@ -47,10 +47,10 @@ Setting `grafana_smtp_password` is the trigger for rendering the `SMTP` section 
 
 | Name | Type | DefaultIfApplic | Comments |
 | ---- | ---- | --------------- | -------- |
-| grafana_smtp_from_address | string | who emails come from , e.g. `grafana@example.com` |
-| grafana_smtp_hostname | hostname:port | how to contact the SMTP server |
-| grafana_smtp_password | string | password for the SMTP server |
+| grafana_smtp_from_address | string || who emails come from , e.g. `grafana@example.com` |
+| grafana_smtp_hostname | hostname:port || how to contact the SMTP server |
+| grafana_smtp_password | string || password for the SMTP server |
 | grafana_smtp_port | integer | 25 | concatenated with `grafana_smtp_hostname` |
-| grafana_smtp_username | string | username on the SMTP server |
+| grafana_smtp_username | string || username on the SMTP server |
 
 ----
