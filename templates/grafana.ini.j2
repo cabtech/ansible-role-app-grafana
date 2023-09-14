@@ -1,4 +1,4 @@
-# MANAGED_BY_ANSIBLE
+; MANAGED_BY_ANSIBLE
 {% if grafana_db_password is defined %}
 [database]
 host = {{ grafana_db_host }}:{{ grafana_db_port }}
@@ -43,3 +43,20 @@ user = {{ grafana_smtp_username }}
 {% else %}
 enabled = false
 {% endif %}
+{% if grafana_googleauth_id is defined %}
+
+[auth.google]
+allow_sign_up = true
+allowed_domains = {{ grafana_googleauth_domain }}
+api_url = https://openidconnect.googleapis.com/v1/userinfo
+auth_url = https://accounts.google.com/o/oauth2/v2/auth
+auto_login = false
+client_id = {{ grafana_googleauth_id }}
+client_secret = {{ grafana_googleauth_secret }}
+enabled = true
+hosted_domain = {{ grafana_googleauth_domain }}
+scopes = openid email profile
+token_url = https://oauth2.googleapis.com/token
+use_pkce = true
+{% endif %}
+; END
