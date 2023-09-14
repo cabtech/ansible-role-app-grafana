@@ -28,7 +28,8 @@ cookie_secure = {{ grafana_cookie_secure | bool | lower }}
 http_port = {{ grafana_port_http }}
 {% if grafana_domain is defined %}
 domain = {{ grafana_domain }}
-root_url = https://{{ grafana_domain }}/
+root_url = https://{{ grafana_domain }}
+router_logging = true
 {% endif %}
 
 [smtp]
@@ -43,9 +44,9 @@ user = {{ grafana_smtp_username }}
 {% else %}
 enabled = false
 {% endif %}
-{% if grafana_googleauth_id is defined %}
 
 [auth.google]
+{% if grafana_googleauth_id is defined %}
 allow_sign_up = true
 allowed_domains = {{ grafana_googleauth_domain }}
 api_url = https://openidconnect.googleapis.com/v1/userinfo
@@ -54,9 +55,14 @@ auto_login = false
 client_id = {{ grafana_googleauth_id }}
 client_secret = {{ grafana_googleauth_secret }}
 enabled = true
-hosted_domain = {{ grafana_googleauth_domain }}
+hosted_domain = {{ grafana_domain }}
 scopes = openid email profile
 token_url = https://oauth2.googleapis.com/token
 use_pkce = true
+{% else %}
+enabled = false
 {% endif %}
+
+[users]
+auto_assign_org_role = Editor
 ; END

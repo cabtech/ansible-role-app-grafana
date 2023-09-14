@@ -68,15 +68,15 @@
   become_user: "{{ grafana_user }}"
   tags: [ct-grafana]
 
-- name: "Render Grafana config file (no_log)"
+- name: "Render Grafana config file (NL)"
   ansible.builtin.template:
-    dest: "{{ grafana_config_file }}"
+    dest: "{{ grafana_cfg_file }}"
     group: "{{ grafana_user }}"
     mode: "0640"  # might contains passwords
     owner: "{{ grafana_user }}"
     src: "grafana.ini.j2"
   no_log: true
-  notify: HandlerRestartGrafana
+  notify: RestartGrafana
   become: true
   tags: [ct-grafana]
 
@@ -86,7 +86,7 @@
     version: "{{ item.version | default('latest') }}"
     state: "{{ item.state }}"
   loop: "{{ grafana_plugins }}"
-  notify: HandlerRestartGrafana
+  notify: RestartGrafana
   become: true
   become_user: "{{ grafana_user }}"
   tags: [ct-grafana]

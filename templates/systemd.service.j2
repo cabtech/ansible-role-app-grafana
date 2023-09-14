@@ -4,7 +4,7 @@ Description=Grafana Server
 
 [Service]
 WorkingDirectory={{ grafana_dir_bin }}/grafana
-ExecStart={{ grafana_dir_bin }}/grafana/bin/grafana-server --config {{ grafana_config_file }}
+ExecStart={{ grafana_dir_bin }}/grafana/bin/grafana-server --config {{ grafana_cfg_file }}
 User={{ grafana_user }}
 Group={{ grafana_user }}
 
