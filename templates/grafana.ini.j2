@@ -9,6 +9,9 @@ type = {{ grafana_db_type }}
 user = {{ grafana_db_username }}
 {% endif %}
 
+[log]
+level = {{ grafana_log_level }}
+
 [paths]
 data = {{ grafana_dir_lib }}
 logs = {{ grafana_dir_log }}
