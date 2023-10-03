@@ -1,13 +1,13 @@
 ---
 # --------------------------------
 
-- name: "ReloadGrafana"
+- name: "HandlerGrafanaReload"
   ansible.builtin.systemd:
     name: "{{ grafana_svc_name }}.service"
     state: reloaded
   become: true
 
-- name: "RestartGrafana"
+- name: "HandlerGrafanaRestart"
   ansible.builtin.systemd:
     name: "{{ grafana_svc_name }}.service"
     state: restarted

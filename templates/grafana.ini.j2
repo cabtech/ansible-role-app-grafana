@@ -13,9 +13,9 @@ user = {{ grafana_db_username }}
 level = {{ grafana_log_level }}
 
 [paths]
-data = {{ grafana_dir_lib }}
-logs = {{ grafana_dir_log }}
-plugins = {{ grafana_dir_lib }}/plugins
+data = {{ grafana_lib_dir }}
+logs = {{ grafana_log_dir }}
+plugins = {{ grafana_lib_dir }}/plugins
 
 [plugins]
 allow_loading_unsigned_plugins = false

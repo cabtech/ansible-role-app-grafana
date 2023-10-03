@@ -1,0 +1,11 @@
+{
+  "service": {
+    "name": "grafana",
+    "tags": ["grafana"],
+    "port": {{ grafana_port_http }},
+    "check": {
+      "http": "http://localhost:{{ grafana_port_http }}/api/health",
+      "interval": "10s"
+    }
+  }
+}

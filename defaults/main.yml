@@ -3,11 +3,12 @@
 
 grafana_allow_embedding: false
 grafana_arch: "linux-amd64"
+grafana_bin_dir: /opt/grafana
 grafana_builds: [{version: "9.4.7", state: present}]
-grafana_cfg_file: "{{ grafana_dir_etc }}/grafana.ini"
+grafana_cfg_dir: /etc/grafana
+grafana_cfg_file: grafana.ini
 grafana_cookie_samesite: "lax"
 grafana_cookie_secure: false
-
 grafana_db_dbname: grafana
 grafana_db_host: "127.0.0.1"
 grafana_db_port: "5432"
@@ -15,18 +16,16 @@ grafana_db_ssl_mode: disable
 grafana_db_type: postgres
 # grafana_db_password: youNeedToSetThis
 # grafana_db_username: youNeedToSetThis
-
-grafana_dir_bin: /opt/grafana
-grafana_dir_etc: /etc/grafana
-grafana_dir_lib: /var/lib/grafana
-grafana_dir_log: /var/log/grafana
 grafana_download_base: "https://dl.grafana.com/enterprise/release"
 grafana_internet_timeout: 60
+grafana_lib_dir: /var/lib/grafana
+grafana_log_dir: /var/log/grafana
 grafana_log_level: info
 grafana_pkg_dependencies: ["adduser", "apt-transport-https", "libfontconfig1", "software-properties-common", "wget"]
 grafana_plugins: []
 grafana_port_http: 3000
-grafana_smtp_port: 25
+grafana_register_with_consul: false
+grafana_smtp_port: 587
 grafana_suffix: "tar.gz"
 grafana_svc_enabled: true
 grafana_svc_name: grafana
@@ -35,11 +34,11 @@ grafana_user: grafana
 grafana_version: "9.4.7"
 
 grafana_dirs:
-- {name: "{{ grafana_dir_bin }}", group: "{{ grafana_user }}", mode: "0755", owner: "{{ grafana_user }}"}
-- {name: "{{ grafana_dir_etc }}", group: "{{ grafana_user }}", mode: "0775", owner: "{{ grafana_user }}"}
-- {name: "{{ grafana_dir_lib }}", group: "{{ grafana_user }}", mode: "0775", owner: "{{ grafana_user }}"}
-- {name: "{{ grafana_dir_lib }}/plugins", group: "{{ grafana_user }}", mode: "0775", owner: "{{ grafana_user }}"}
-- {name: "{{ grafana_dir_log }}", group: "{{ grafana_user }}", mode: "0775", owner: "{{ grafana_user }}"}
+- {name: "{{ grafana_bin_dir }}", group: "{{ grafana_user }}", mode: "0755", owner: "{{ grafana_user }}"}
+- {name: "{{ grafana_cfg_dir }}", group: "{{ grafana_user }}", mode: "0775", owner: "{{ grafana_user }}"}
+- {name: "{{ grafana_lib_dir }}", group: "{{ grafana_user }}", mode: "0775", owner: "{{ grafana_user }}"}
+- {name: "{{ grafana_lib_dir }}/plugins", group: "{{ grafana_user }}", mode: "0775", owner: "{{ grafana_user }}"}
+- {name: "{{ grafana_log_dir }}", group: "{{ grafana_user }}", mode: "0775", owner: "{{ grafana_user }}"}
 
 # --------------------------------
 ...

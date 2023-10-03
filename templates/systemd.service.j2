@@ -3,10 +3,13 @@
 Description=Grafana Server
 
 [Service]
-WorkingDirectory={{ grafana_dir_bin }}/grafana
-ExecStart={{ grafana_dir_bin }}/grafana/bin/grafana-server --config {{ grafana_cfg_file }}
-User={{ grafana_user }}
+ExecStart={{ grafana_bin_dir }}/grafana/bin/grafana-server --config {{ grafana_cfg_dir }}/{{ grafana_cfg_file }}
+{% if grafana_register_with_consul %}
+ExecStartPost=/opt/hashicorp/bin/consul services register {{ grafana_cfg_dir }}/consul-grafana.json
+{% endif %}
 Group={{ grafana_user }}
+User={{ grafana_user }}
+WorkingDirectory={{ grafana_bin_dir }}/grafana
 
 [Install]
 WantedBy=multi-user.target

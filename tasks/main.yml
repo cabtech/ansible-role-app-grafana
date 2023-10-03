@@ -26,7 +26,7 @@
     group: "{{ grafana_user }}"
     mode: "0755"
     owner: "{{ grafana_user }}"
-    path: "{{ grafana_dir_bin }}/{{ item.version }}"
+    path: "{{ grafana_bin_dir }}/{{ item.version }}"
     state: directory
   loop: "{{ grafana_builds }}"
   when: item.state == "present"
@@ -35,7 +35,7 @@
 
 - name: "Download Grafana archives"
   ansible.builtin.get_url:
-    dest: "{{ grafana_dir_bin }}/{{ item.version }}/grafana-enterprise-{{ item.version }}.{{ grafana_arch }}.{{ grafana_suffix }}"
+    dest: "{{ grafana_bin_dir }}/{{ item.version }}/grafana-enterprise-{{ item.version }}.{{ grafana_arch }}.{{ grafana_suffix }}"
     mode: "0644"
     timeout: "{{ grafana_internet_timeout }}"
     url: "{{ grafana_download_base }}/grafana-enterprise-{{ item.version }}.{{ grafana_arch }}.{{ grafana_suffix }}"
@@ -49,8 +49,8 @@
 - name: "Expand Grafana archives"
   ansible.builtin.unarchive:
     copy: false
-    dest: "{{ grafana_dir_bin }}/{{ item.version }}"
-    src: "{{ grafana_dir_bin }}/{{ item.version }}/grafana-enterprise-{{ item.version }}.{{ grafana_arch }}.{{ grafana_suffix }}"
+    dest: "{{ grafana_bin_dir }}/{{ item.version }}"
+    src: "{{ grafana_bin_dir }}/{{ item.version }}/grafana-enterprise-{{ item.version }}.{{ grafana_arch }}.{{ grafana_suffix }}"
   loop: "{{ grafana_builds }}"
   when: item.state == "present"
   become: true
@@ -60,7 +60,7 @@
 
 - name: "Create symlink to active Grafana binaries"
   ansible.builtin.file:
-    dest: "{{ grafana_dir_bin }}/grafana"
+    dest: "{{ grafana_bin_dir }}/grafana"
     src: "./{{ grafana_version }}/grafana-{{ grafana_version }}"
     state: link
   ignore_errors: "{{ ansible_check_mode }}"
@@ -74,9 +74,9 @@
     group: "{{ grafana_user }}"
     mode: "0640"  # might contains passwords
     owner: "{{ grafana_user }}"
-    src: "grafana.ini.j2"
+    src: grafana.ini.j2
   no_log: true
-  notify: RestartGrafana
+  notify: HandlerGrafanaRestart
   become: true
   tags: [ct-grafana]
 
@@ -86,7 +86,7 @@
     version: "{{ item.version | default('latest') }}"
     state: "{{ item.state }}"
   loop: "{{ grafana_plugins }}"
-  notify: RestartGrafana
+  notify: HandlerGrafanaRestart
   become: true
   become_user: "{{ grafana_user }}"
   tags: [ct-grafana]
@@ -98,13 +98,23 @@
     mode: "0644"
     owner: root
     src: "systemd.service.j2"
-  register: reg_systemd
+  register: unit_file
+  become: true
+  tags: [ct-grafana]
+
+- name: "Render Consul services file"
+  ansible.builtin.template:
+    dest: "{{ grafana_cfg_dir }}/consul-grafana.json"
+    group: root
+    mode: "0644"
+    owner: root
+    src: consul-grafana.json.j2
   become: true
   tags: [ct-grafana]
 
 - name: "Configure Grafana service"
   ansible.builtin.systemd:
-    daemon_reload: "{{ reg_systemd is changed }}"
+    daemon_reload: "{{ unit_file is changed }}"
     enabled: "{{ grafana_svc_enabled }}"
     name: grafana
     state: "{{ grafana_svc_state }}"
