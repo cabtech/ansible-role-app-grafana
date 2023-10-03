@@ -46,7 +46,7 @@
   become_user: "{{ grafana_user }}"
   tags: [ct-grafana]
 
-- name: "Expand Grafana archives"
+- name: "Expand Grafana archives (IECM)"
   ansible.builtin.unarchive:
     copy: false
     dest: "{{ grafana_bin_dir }}/{{ item.version }}"
@@ -58,7 +58,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
   tags: [ct-grafana]
 
-- name: "Create symlink to active Grafana binaries"
+- name: "Create symlink to active Grafana binaries (IECM)"
   ansible.builtin.file:
     dest: "{{ grafana_bin_dir }}/grafana"
     src: "./{{ grafana_version }}/grafana-{{ grafana_version }}"
@@ -68,11 +68,11 @@
   become_user: "{{ grafana_user }}"
   tags: [ct-grafana]
 
-- name: "Render Grafana config file (NL)"
+- name: "Render config file (NL)"
   ansible.builtin.template:
-    dest: "{{ grafana_cfg_file }}"
+    dest: "{{ grafana_cfg_dir }}/{{ grafana_cfg_file }}"
     group: "{{ grafana_user }}"
-    mode: "0640"  # might contains passwords
+    mode: "0640"  # as might contain passwords
     owner: "{{ grafana_user }}"
     src: grafana.ini.j2
   no_log: true
