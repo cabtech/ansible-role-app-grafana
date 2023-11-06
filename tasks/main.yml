@@ -83,8 +83,8 @@
 - name: "Grafana plugins"
   community.grafana.grafana_plugin:
     name: "{{ item.name }}"
-    version: "{{ item.version | default('latest') }}"
     state: "{{ item.state }}"
+    version: "{{ item.version }}"
   loop: "{{ grafana_plugins }}"
   notify: HandlerGrafanaRestart
   become: true
