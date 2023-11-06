@@ -28,7 +28,7 @@
 | Name | Type | Comments |
 | ---- | ---- | -------- |
 | grafana_domain | string | Only needed if using reverse proxy |
-| grafana_plugins | list(dict(name,state,version)) | plugins to install key(version) is optional |
+| grafana_plugins | list(dict(name,state,version)) | plugins to install |
 
 ## Database variables
 Setting `grafana_db_password` is the trigger for rendering the `database` section in `grafana.ini`
