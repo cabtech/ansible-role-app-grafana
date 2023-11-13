@@ -104,7 +104,7 @@
 
 - name: "Render Consul services file"
   ansible.builtin.template:
-    dest: "{{ grafana_cfg_dir }}/consul-grafana.json"
+    dest: "{{ grafana_consul_dir }}/core-grafana.json"
     group: root
     mode: "0644"
     owner: root

@@ -7,6 +7,7 @@ grafana_bin_dir: /opt/grafana
 grafana_builds: [{version: "9.4.7", state: present}]
 grafana_cfg_dir: /etc/grafana
 grafana_cfg_file: grafana.ini
+grafana_consul_dir: /etc/consul/svc
 grafana_cookie_samesite: "lax"
 grafana_cookie_secure: false
 grafana_db_dbname: grafana

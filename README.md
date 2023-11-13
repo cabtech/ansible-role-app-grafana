@@ -10,6 +10,7 @@
 | grafana_builds | list(dict) | see `defaults/main.yml` ||
 | grafana_cfg_dir | UnixPath |  `/etc/grafana` ||
 | grafana_cfg_file | UnixPath |  `grafana.ini` | in `grafana_cfg_dir` |
+| grafana_consul_dir | UnixPath | `/etc/consul/svc` | where to store Consul service definitions |
 | grafana_dirs | list(dict) | see `defaults/main.yml` | directories to create |
 | grafana_download_base | URL | `https://dl.grafana.com/enterprise/release` ||
 | grafana_lib_dir | UnixPath | `/var/lib/grafana` ||

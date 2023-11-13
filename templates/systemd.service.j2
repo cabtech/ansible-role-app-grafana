@@ -5,7 +5,7 @@ Description=Grafana Server
 [Service]
 ExecStart={{ grafana_bin_dir }}/grafana/bin/grafana-server --config {{ grafana_cfg_dir }}/{{ grafana_cfg_file }}
 {% if grafana_register_with_consul %}
-ExecStartPost=/opt/hashicorp/bin/consul services register {{ grafana_cfg_dir }}/consul-grafana.json
+ExecStartPost=/opt/hashicorp/bin/consul services register {{ grafana_consul_dir }}/core-grafana.json
 {% endif %}
 Group={{ grafana_user }}
 User={{ grafana_user }}
